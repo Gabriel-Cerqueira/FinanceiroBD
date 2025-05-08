@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+C:\Users\gabri\Documents\GitHub\FinanceiroBD\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3199531179.index
+2813688557.index
+1285460693.index
+419171391.index
+862934877.index
+2570093809.index

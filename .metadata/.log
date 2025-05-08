@@ -1,0 +1,122 @@
+!SESSION 2025-04-03 21:23:06.986 -----------------------------------------------
+eclipse.buildId=4.34.0.20241128-0756
+java.version=21.0.5
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY ch.qos.logback.classic 1 0 2025-04-03 21:23:08.710
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2025-04-03 21:23:14.389
+!MESSAGE Logback config file: C:\Users\gabri\Documents\GitHub\FinanceiroBD\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.0.20241001-1350.xml
+
+!ENTRY org.eclipse.egit.ui 2 0 2025-04-03 21:23:18.978
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\gabri'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.jst.server.tomcat.core 4 4 2025-04-03 21:26:35.318
+!MESSAGE C:\Users\gabri\Documents\Faculdade\Unisalesiano\7 Semestre\Java\apache-tomcat-11.0.5\conf\server.xml (O sistema não pode encontrar o caminho especificado)
+!STACK 0
+java.io.FileNotFoundException: C:\Users\gabri\Documents\Faculdade\Unisalesiano\7 Semestre\Java\apache-tomcat-11.0.5\conf\server.xml (O sistema não pode encontrar o caminho especificado)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152)
+	at org.eclipse.jst.server.tomcat.core.internal.Tomcat110Configuration.load(Tomcat110Configuration.java:254)
+	at org.eclipse.jst.server.tomcat.core.internal.Tomcat110Configuration.importFromPath(Tomcat110Configuration.java:295)
+	at org.eclipse.jst.server.tomcat.core.internal.TomcatServer.importRuntimeConfiguration(TomcatServer.java:201)
+	at org.eclipse.wst.server.core.internal.ServerWorkingCopy.importRuntimeConfiguration(ServerWorkingCopy.java:826)
+	at org.eclipse.wst.server.ui.internal.wizard.fragment.NewServerWizardFragment.createChildFragments(NewServerWizardFragment.java:128)
+	at org.eclipse.wst.server.ui.internal.wizard.fragment.NewServerWizardFragment.getChildFragments(NewServerWizardFragment.java:99)
+	at org.eclipse.wst.server.ui.internal.wizard.TaskWizard.addSubWizardFragments(TaskWizard.java:327)
+	at org.eclipse.wst.server.ui.internal.wizard.TaskWizard.addSubWizardFragments(TaskWizard.java:331)
+	at org.eclipse.wst.server.ui.internal.wizard.TaskWizard.getAllWizardFragments(TaskWizard.java:315)
+	at org.eclipse.wst.server.ui.internal.wizard.TaskWizard.addPages(TaskWizard.java:345)
+	at org.eclipse.wst.server.ui.internal.wizard.TaskWizard.updatePages(TaskWizard.java:392)
+	at org.eclipse.wst.server.ui.internal.wizard.TaskWizardPage$1.run(TaskWizardPage.java:131)
+	at org.eclipse.swt.widgets.Synchronizer.syncExec(Synchronizer.java:183)
+	at org.eclipse.ui.internal.UISynchronizer.syncExec(UISynchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4941)
+	at org.eclipse.wst.server.ui.internal.wizard.TaskWizardPage.update(TaskWizardPage.java:128)
+	at org.eclipse.jst.server.tomcat.ui.internal.TomcatRuntimeComposite.validate(TomcatRuntimeComposite.java:408)
+	at org.eclipse.jst.server.tomcat.ui.internal.TomcatRuntimeComposite$2.modifyText(TomcatRuntimeComposite.java:172)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:196)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:91)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4404)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1173)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1197)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1178)
+	at org.eclipse.swt.widgets.Text.wmCommandChild(Text.java:3077)
+	at org.eclipse.swt.widgets.Control.WM_COMMAND(Control.java:4883)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4735)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5177)
+	at org.eclipse.swt.internal.win32.OS.CallWindowProc(Native Method)
+	at org.eclipse.swt.widgets.Text.callWindowProc(Text.java:296)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4833)
+	at org.eclipse.swt.widgets.Text.windowProc(Text.java:2655)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5177)
+	at org.eclipse.swt.internal.win32.OS.SetWindowText(Native Method)
+	at org.eclipse.swt.internal.win32.OS.SetWindowText(OS.java:2296)
+	at org.eclipse.swt.widgets.Text.setText(Text.java:2315)
+	at org.eclipse.jst.server.tomcat.ui.internal.TomcatRuntimeComposite$3.widgetSelected(TomcatRuntimeComposite.java:184)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:265)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:91)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4404)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1173)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4202)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3790)
+	at org.eclipse.jface.window.Window.runEventLoop(Window.java:823)
+	at org.eclipse.jface.window.Window.open(Window.java:799)
+	at org.eclipse.wst.server.ui.internal.cnf.ServersView2$1.widgetSelected(ServersView2.java:120)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:265)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:91)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4404)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1173)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1197)
+	at org.eclipse.swt.widgets.Widget.sendSelectionEvent(Widget.java:1214)
+	at org.eclipse.swt.widgets.Link.wmNotifyChild(Link.java:721)
+	at org.eclipse.swt.widgets.Control.wmNotify(Control.java:5802)
+	at org.eclipse.swt.widgets.Composite.wmNotify(Composite.java:1972)
+	at org.eclipse.swt.widgets.Control.WM_NOTIFY(Control.java:5369)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4788)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5177)
+	at org.eclipse.swt.internal.win32.OS.CallWindowProc(Native Method)
+	at org.eclipse.swt.widgets.Link.callWindowProc(Link.java:158)
+	at org.eclipse.swt.widgets.Widget.wmLButtonUp(Widget.java:2134)
+	at org.eclipse.swt.widgets.Control.WM_LBUTTONUP(Control.java:5182)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4769)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5177)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3788)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1151)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1042)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:663)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:570)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:178)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:143)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:109)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:439)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:271)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:668)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:605)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1481)
+
+!ENTRY org.eclipse.jst.server.tomcat.core 4 0 2025-04-03 21:29:29.365
+!MESSAGE Several ports (8005, 8080) required by Tomcat v11.0 Server at localhost are already in use. The server may already be running in another process, or a system process may be using the port. To start this server you will need to stop the other process or change the port number(s).
+
+!ENTRY org.eclipse.jst.server.tomcat.core 4 0 2025-04-03 21:29:31.869
+!MESSAGE Several ports (8005, 8080) required by Tomcat v11.0 Server at localhost are already in use. The server may already be running in another process, or a system process may be using the port. To start this server you will need to stop the other process or change the port number(s).
+
+!ENTRY org.eclipse.jst.server.tomcat.core 4 0 2025-04-03 21:32:23.420
+!MESSAGE Several ports (8005, 8080) required by Tomcat v11.0 Server at localhost are already in use. The server may already be running in another process, or a system process may be using the port. To start this server you will need to stop the other process or change the port number(s).
