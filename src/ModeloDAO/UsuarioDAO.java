@@ -81,10 +81,10 @@ public class UsuarioDAO {
 
             if (rs.next()) {
                 usuario = new Usuario();
-                usuario.setIdUsuario(rs.getInt("idUsuario"));
-                usuario.setNome(rs.getString("nome"));
-                usuario.setEmail(rs.getString("email"));
-                usuario.setSenha(rs.getString("senha"));
+                usuario.setIdUsuario(rs.getIntidUsuario);
+                usuario.setNome(rs.getStringnome);
+                usuario.setEmail(rs.getStringemail);
+                usuario.setSenha(rs.getStringsenha);
             }
 
             rs.close();
@@ -107,10 +107,10 @@ public class UsuarioDAO {
 
             while (rs.next()) {
                 Usuario usuario = new Usuario();
-                usuario.setIdUsuario(rs.getInt("idUsuario"));
-                usuario.setNome(rs.getString("nome"));
-                usuario.setEmail(rs.getString("email"));
-                usuario.setSenha(rs.getString("senha"));
+                usuario.setIdUsuario(rs.getIntidUsuario);
+                usuario.setNome(rs.getStringnome);
+                usuario.setEmail(rs.getStringemail);
+                usuario.setSenha(rs.getStringsenha);
                 usuarios.add(usuario);
             }
 

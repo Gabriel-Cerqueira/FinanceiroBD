@@ -14,7 +14,7 @@ public class CategoriaDAO {
     public void inserir(Categoria categoria) {
         Connection conexao = ConnectionFactory.getConnection();
         String sql = "INSERT INTO categorias (nome, usuario_id) VALUES (?, ?)";
-        
+
         try {
             PreparedStatement pstmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, categoria.getNome());
@@ -26,6 +26,7 @@ public class CategoriaDAO {
                 categoria.setIdCategoria(rs.getInt(1));
             }
 
+            rs.close();
             pstmt.close();
             conexao.close();
         } catch (SQLException e) {
@@ -36,7 +37,7 @@ public class CategoriaDAO {
     public void alterar(Categoria categoria) {
         Connection conexao = ConnectionFactory.getConnection();
         String sql = "UPDATE categorias SET nome = ?, usuario_id = ? WHERE idCategoria = ?";
-        
+
         try {
             PreparedStatement pstmt = conexao.prepareStatement(sql);
             pstmt.setString(1, categoria.getNome());
@@ -54,7 +55,7 @@ public class CategoriaDAO {
     public void excluir(int idCategoria) {
         Connection conexao = ConnectionFactory.getConnection();
         String sql = "DELETE FROM categorias WHERE idCategoria = ?";
-        
+
         try {
             PreparedStatement pstmt = conexao.prepareStatement(sql);
             pstmt.setInt(1, idCategoria);
@@ -71,7 +72,7 @@ public class CategoriaDAO {
         Categoria categoria = null;
         Connection conexao = ConnectionFactory.getConnection();
         String sql = "SELECT idCategoria, nome, usuario_id FROM categorias WHERE idCategoria = ?";
-        
+
         try {
             PreparedStatement pstmt = conexao.prepareStatement(sql);
             pstmt.setInt(1, idCategoria);
@@ -97,7 +98,7 @@ public class CategoriaDAO {
         ArrayList<Categoria> categorias = new ArrayList<>();
         Connection conexao = ConnectionFactory.getConnection();
         String sql = "SELECT idCategoria, nome, usuario_id FROM categorias";
-        
+
         try {
             PreparedStatement pstmt = conexao.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
