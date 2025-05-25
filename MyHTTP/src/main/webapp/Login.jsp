@@ -2,11 +2,44 @@
 <%@ page import="Modelo.Usuario"%>
 <%@ page import="ModeloDAO.UsuarioDAO"%>
 
+<%
+// Processamento do login
+String metodo = request.getMethod();
+if (metodo.equals("POST")) {
+    String email = request.getParameter("email");
+    String senha = request.getParameter("senha");
+    
+    if (email != null && !email.trim().isEmpty() && 
+        senha != null && !senha.trim().isEmpty()) {
+        
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        Usuario usuario = usuarioDAO.autenticar(email, senha);
+        
+        if (usuario != null) {
+            // Login bem-sucedido
+            session.setAttribute("usuarioLogado", usuario);
+            session.setAttribute("nomeUsuario", usuario.getNome());
+            session.setAttribute("idUsuario", usuario.getIdUsuario());
+            
+            // Redireciona para Transacao.jsp
+            response.sendRedirect("Transacao.jsp");
+            return;
+        } else {
+            // Login falhou
+            request.setAttribute("erro", "E-mail ou senha incorretos!");
+        }
+    } else {
+        request.setAttribute("erro", "E-mail e senha são obrigatórios!");
+    }
+}
+%>
+
 <!DOCTYPE html>
 <html>
     <head>
         <title>FinanceiroBD - Login</title>
         <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
         <style>
             .login-container {
@@ -65,7 +98,7 @@
                     }
                 %>
                 
-                <form action="login" method="POST">
+                <form action="Login.jsp" method="POST">
                     <fieldset class="mb-3">
                         <label for="email" class="form-label">E-mail</label>
                         <input type="email" id="email" name="email" required class="form-control" 
@@ -95,11 +128,7 @@
                     
                     <div class="text-center">
                         <p class="mb-2">Não tem uma conta?</p>
-                        <a href="cadastro-usuario.jsp" class="btn btn-outline-secondary">Criar Conta</a>
-                    </div>
-                    
-                    <div class="text-center mt-3">
-                        <a href="recuperar-senha.jsp" class="text-decoration-none">Esqueceu sua senha?</a>
+                        <a href="Usuario.jsp" class="btn btn-outline-secondary">Criar Conta</a>
                     </div>
                 </form>
             </div>
