@@ -155,6 +155,7 @@ if (metodo.equals("POST")) {
             %>
             
             <form action="Login.jsp" method="POST" style="width: 100%;">
+            	<label for="email">Email:</label>
                 <input type="email" id="email" name="email" placeholder="email@domain.com" required
                        value="<%= request.getParameter("email") != null ? request.getParameter("email") : "" %>">
                 

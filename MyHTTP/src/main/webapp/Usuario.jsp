@@ -274,15 +274,17 @@ if (metodo.equals("POST")) {
                         </div>
                     </div>
                     
-                    <div class="buttons">
-                        <button type="submit" class="btn btn-primary">Criar conta</button>
+                    <div class="buttons" style="display: flex; align-items: center;">
+                    	<button type="submit" class="btn btn-primary">Criar conta</button>
                         <button type="reset" class="btn btn-secondary">Limpar</button>
+                        <a href="Login.jsp"
+						   class="btn btn-secondary"
+						   style="margin-left: auto; display: flex; align-items: center; gap: 6px; text-decoration: none;">
+						    Cancelar
+						</a>
                     </div>
                 </form>
                 
-                <a href="Login.jsp" class="back-link">
-                    <i class="bi bi-arrow-left"></i> Voltar para o login
-                </a>
             </div>
         </div>
         
