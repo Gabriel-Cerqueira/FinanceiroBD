@@ -47,7 +47,7 @@ if (metodo.equals("POST")) {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
         <style>
             :root {
-                --brand-green: #5EFF33;
+                --brand-green: #91f549;
                 --bg-light: #fafbfc;
                 --card-bg: #fff;
                 --border: #e0e0e0;

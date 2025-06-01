@@ -76,7 +76,7 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         :root {
-            --brand-green: #5EFF33;
+            --brand-green: #91f549;
             --bg-light: #fafbfc;
             --card-bg: #fff;
             --border: #e0e0e0;
@@ -443,87 +443,166 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 </span>         
             </div>
         </div>
-        <div class="card mb-4" style="margin-bottom: 2.5rem !important;">
-		  <div class="card-header">
-		    <i class="fas fa-chart-bar me-1"></i>
-		    Gastos Mensais
-		  </div>
-		  <div class="card-body" style="min-height:300px; position:relative;">
-		    <canvas id="graficoTransacoes"></canvas>
-		  </div>
-		</div>
-        <script>
-        // Função para processar os dados e criar o gráfico
-        function criarGraficoTransacoes() {
-            // Obter os dados da tabela de transações
-            const transacoes = [
-            <% 
-            // Usar a lista de transações já disponível no JSP
-            for (Transacao t : transacoes) {
-                if (t.getUsuarioId() == usuarioLogado.getIdUsuario()) {
-            %>
-                {
-                    data: new Date("<%= t.getData() %>"),
-                    valor: <%= t.getValor() %>,
-                    tipo: "<%= t.getTipo() %>" 
-                },
-            <% 
-                }
-            } 
-            %>
-            ];
-            
-            // Processar dados por mês
-            const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-            const dadosPorMes = Array(12).fill(0);
-            
-            transacoes.forEach(transacao => {
-                // Se for despesa (SAIDA), adiciona ao mês correspondente
-                if (transacao.tipo === "SAIDA") {
-                    const mes = transacao.data.getMonth();
-                    dadosPorMes[mes] += Number(transacao.valor);
-                }
-            });
-            
-            // Criar o gráfico
-            const ctx = document.getElementById("graficoTransacoes");
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: meses,
-                    datasets: [{
-                        label: 'Gastos Mensais (R$)',
-                        backgroundColor: 'rgba(220, 53, 69, 0.8)',
-                        borderColor: 'rgba(220, 53, 69, 1)',
-                        borderWidth: 1,
-                        data: dadosPorMes,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Valor (R$)'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Mês'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Executar a função quando a página carregar
-        document.addEventListener('DOMContentLoaded', criarGraficoTransacoes);
-        </script>
+        <div class="graficos-row" style="display: flex; gap: 20px; margin-bottom: 2.5rem;">
+	  <!-- Gráfico de Barras (Gastos Mensais) -->
+	  <div class="card" style="flex: 1;">
+	    <div class="card-header">
+	      <i class="fas fa-chart-bar me-1"></i>
+	      Gastos Mensais
+	    </div>
+	    <div class="card-body" style="min-height: 300px; position: relative;">
+	      <canvas id="graficoTransacoes"></canvas>
+	    </div>
+	  </div>
+	  
+	  <!-- Gráfico de Linhas (Comparativo Ganhos/Gastos) -->
+	  <div class="card" style="flex: 1;">
+	    <div class="card-header">
+	      <i class="fas fa-chart-line me-1"></i>
+	      Comparativo Ganhos/Gastos
+	    </div>
+	    <div class="card-body" style="min-height: 300px; position: relative;">
+	      <canvas id="graficoLinhas"></canvas>
+	    </div>
+	  </div>
+	</div>
+	
+	<script>
+	// Função para processar os dados e criar os gráficos
+	function criarGraficos() {
+	    // Obter os dados da tabela de transações
+	    const transacoes = [
+	    <% 
+	    // Usar a lista de transações já disponível no JSP
+	    for (Transacao t : transacoes) {
+	        if (t.getUsuarioId() == usuarioLogado.getIdUsuario()) {
+	    %>
+	        {
+	            data: new Date("<%= t.getData() %>"),
+	            valor: <%= t.getValor() %>,
+	            tipo: "<%= t.getTipo() %>" 
+	        },
+	    <% 
+	        }
+	    } 
+	    %>
+	    ];
+	    
+	    // Processar dados por mês
+	    const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+	    const gastosPorMes = Array(12).fill(0);
+	    const ganhosPorMes = Array(12).fill(0);
+	    
+	    transacoes.forEach(transacao => {
+	        const mes = transacao.data.getMonth();
+	        if (transacao.tipo === "SAIDA") {
+	            gastosPorMes[mes] += Number(transacao.valor);
+	        } else if (transacao.tipo === "ENTRADA") {
+	            ganhosPorMes[mes] += Number(transacao.valor);
+	        }
+	    });
+	    
+	    // Criar o gráfico de barras (Gastos Mensais)
+	    const ctxBarras = document.getElementById("graficoTransacoes");
+	    new Chart(ctxBarras, {
+	        type: 'bar',
+	        data: {
+	            labels: meses,
+	            datasets: [{
+	                label: 'Gastos Mensais (R$)',
+	                backgroundColor: 'rgba(220, 53, 69, 0.8)',
+	                borderColor: 'rgba(220, 53, 69, 1)',
+	                borderWidth: 1,
+	                data: gastosPorMes,
+	            }]
+	        },
+	        options: {
+	            responsive: true,
+	            maintainAspectRatio: false,
+	            layout: {
+	                padding: {
+	                    top: 10,
+	                    bottom: 10
+	                }
+	            },
+	            scales: {
+	                y: {
+	                    beginAtZero: true,
+	                    title: {
+	                        display: true,
+	                        text: 'Valor (R$)'
+	                    }
+	                },
+	                x: {
+	                    title: {
+	                        display: true,
+	                        text: 'Mês'
+	                    }
+	                }
+	            }
+	        }
+	    });
+	    
+	    // Criar o gráfico de linhas (Comparativo)
+	    const ctxLinhas = document.getElementById("graficoLinhas");
+	    new Chart(ctxLinhas, {
+	        type: 'line',
+	        data: {
+	            labels: meses,
+	            datasets: [
+	                {
+	                    label: 'Gastos (R$)',
+	                    borderColor: '#dc3545',
+	                    backgroundColor: 'rgba(220, 53, 69, 0.1)',
+	                    borderWidth: 2,
+	                    pointBackgroundColor: '#dc3545',
+	                    tension: 0.3,
+	                    fill: true,
+	                    data: gastosPorMes
+	                },
+	                {
+	                    label: 'Ganhos (R$)',
+	                    borderColor: '#28a745',
+	                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
+	                    borderWidth: 2,
+	                    pointBackgroundColor: '#28a745',
+	                    tension: 0.3,
+	                    fill: true,
+	                    data: ganhosPorMes
+	                }
+	            ]
+	        },
+	        options: {
+	            responsive: true,
+	            maintainAspectRatio: false,
+	            layout: {
+	                padding: {
+	                    top: 10,
+	                    bottom: 10
+	                }
+	            },
+	            scales: {
+	                y: {
+	                    beginAtZero: true,
+	                    title: {
+	                        display: true,
+	                        text: 'Valor (R$)'
+	                    }
+	                },
+	                x: {
+	                    title: {
+	                        display: true,
+	                        text: 'Mês'
+	                    }
+	                }
+	            }
+	        }
+	    });
+	}
+	
+	// Executar a função quando a página carregar
+	document.addEventListener('DOMContentLoaded', criarGraficos);
+	</script>
 
         <div class="search-create-row">
             <div class="search-box">
