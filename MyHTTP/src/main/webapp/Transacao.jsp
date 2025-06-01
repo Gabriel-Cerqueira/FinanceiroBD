@@ -68,6 +68,7 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 <head>
     <meta charset="UTF-8">
     <title>FinanceiroBD - Transações</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- FONT: Inter -->
     <link href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap" rel="stylesheet">
@@ -442,6 +443,87 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 </span>         
             </div>
         </div>
+        <div class="card mb-4" style="margin-bottom: 2.5rem !important;">
+		  <div class="card-header">
+		    <i class="fas fa-chart-bar me-1"></i>
+		    Gastos Mensais
+		  </div>
+		  <div class="card-body" style="min-height:300px; position:relative;">
+		    <canvas id="graficoTransacoes"></canvas>
+		  </div>
+		</div>
+        <script>
+        // Função para processar os dados e criar o gráfico
+        function criarGraficoTransacoes() {
+            // Obter os dados da tabela de transações
+            const transacoes = [
+            <% 
+            // Usar a lista de transações já disponível no JSP
+            for (Transacao t : transacoes) {
+                if (t.getUsuarioId() == usuarioLogado.getIdUsuario()) {
+            %>
+                {
+                    data: new Date("<%= t.getData() %>"),
+                    valor: <%= t.getValor() %>,
+                    tipo: "<%= t.getTipo() %>" 
+                },
+            <% 
+                }
+            } 
+            %>
+            ];
+            
+            // Processar dados por mês
+            const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+            const dadosPorMes = Array(12).fill(0);
+            
+            transacoes.forEach(transacao => {
+                // Se for despesa (SAIDA), adiciona ao mês correspondente
+                if (transacao.tipo === "SAIDA") {
+                    const mes = transacao.data.getMonth();
+                    dadosPorMes[mes] += Number(transacao.valor);
+                }
+            });
+            
+            // Criar o gráfico
+            const ctx = document.getElementById("graficoTransacoes");
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: meses,
+                    datasets: [{
+                        label: 'Gastos Mensais (R$)',
+                        backgroundColor: 'rgba(220, 53, 69, 0.8)',
+                        borderColor: 'rgba(220, 53, 69, 1)',
+                        borderWidth: 1,
+                        data: dadosPorMes,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Valor (R$)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Mês'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Executar a função quando a página carregar
+        document.addEventListener('DOMContentLoaded', criarGraficoTransacoes);
+        </script>
 
         <div class="search-create-row">
             <div class="search-box">
@@ -468,28 +550,30 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                         </tr>
                     </thead>
                     <tbody id="transacoes-tbody">
-                        <%
-                        for (Transacao transacao : transacoes) {
-                            if (transacao.getUsuarioId() == usuarioLogado.getIdUsuario()) {
-                        %>
-                        <tr>
-                            <td><%= transacao.getData().format(formatter) %></td>
-                            <td>
-                                <%
-                                Categoria categoria = categoriaDAO.pesquisarPorCodigo(transacao.getCategoriaId());
-                                out.print(categoria != null ? categoria.getNome() : "-");
-                                %>
-                            </td>
-                            <td><%= transacao.getTipoPagamento() %></td>
-                            <td><%= transacao.getInformacaoAdicional() != null ? transacao.getInformacaoAdicional() : "" %></td>
-                            <td>R$<%= transacao.getValor().setScale(2, BigDecimal.ROUND_HALF_EVEN).toString().replace('.', ',') %></td>
-                            <td class="actions-cell">
-                                <button class="btn-action" type="button" title="Editar" onclick="openEditModal(<%= transacao.getIdTransacao() %>, '<%= transacao.getTipo().name() %>', '<%= transacao.getData() %>', <%= transacao.getCategoriaId() %>, '<%= transacao.getTipoPagamento() %>', <%= transacao.getValor() %>, '<%= transacao.getInformacaoAdicional() != null ? transacao.getInformacaoAdicional().replace("'", "\\'") : "" %>')"><i class="bi bi-pencil"></i></button>
-                                <button class="btn-action" type="button" title="Excluir" onclick="confirmarExclusao(<%= transacao.getIdTransacao() %>)"><i class="bi bi-trash"></i></button>
-                            </td>
-                        </tr>
-                        <% }} %>
-                    </tbody>
+					    <%
+					    for (Transacao transacao : transacoes) {
+					        if (transacao.getUsuarioId() == usuarioLogado.getIdUsuario()) {
+					    %>
+					    <tr>
+					        <td><%= transacao.getData().format(formatter) %></td>
+					        <td>
+					            <%
+					            Categoria categoria = categoriaDAO.pesquisarPorCodigo(transacao.getCategoriaId());
+					            out.print(categoria != null ? categoria.getNome() : "-");
+					            %>
+					        </td>
+					        <td><%= transacao.getTipoPagamento() %></td>
+					        <td><%= transacao.getInformacaoAdicional() != null ? transacao.getInformacaoAdicional() : "" %></td>
+					        <td style="color: <%= transacao.getTipo().name().equals("ENTRADA") ? "#28a745" : "#dc3545" %>;">
+					            R$<%= transacao.getValor().setScale(2, BigDecimal.ROUND_HALF_EVEN).toString().replace('.', ',') %>
+					        </td>
+					        <td class="actions-cell">
+					            <button class="btn-action" type="button" title="Editar" onclick="openEditModal(<%= transacao.getIdTransacao() %>, '<%= transacao.getTipo().name() %>', '<%= transacao.getData() %>', <%= transacao.getCategoriaId() %>, '<%= transacao.getTipoPagamento() %>', <%= transacao.getValor() %>, '<%= transacao.getInformacaoAdicional() != null ? transacao.getInformacaoAdicional().replace("'", "\\'") : "" %>')"><i class="bi bi-pencil"></i></button>
+					            <button class="btn-action" type="button" title="Excluir" onclick="confirmarExclusao(<%= transacao.getIdTransacao() %>)"><i class="bi bi-trash"></i></button>
+					        </td>
+					    </tr>
+					    <% }} %>
+					</tbody>
                 </table>
             </div>
         </div>
